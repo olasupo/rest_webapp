@@ -48,8 +48,8 @@ pipeline {
             steps {
                 script {
                     sh 'python3 clean_environment.py'
-                    sh 'docker stop dev_mysql'
-                    sh 'docker rm dev_mysql'
+                    sh 'sudo docker stop dev_mysql'
+                    sh 'sudo docker rm dev_mysql'
                 }
             }
         }
@@ -57,21 +57,21 @@ pipeline {
         stage('Build docker image for rest_webapp') {
             steps {
                 script {
-                    sh 'docker build -t rest_webapp .'
+                    sh 'sudo docker build -t rest_webapp .'
                 }
             }
         }
          stage('Push image to Docker hub') {
             steps {
                 script {
-                    sh 'docker push olasupoo/rest_webapp:latest'
+                    sh 'sudo docker push olasupoo/rest_webapp:latest'
                 }
             }
         }
         stage('Run docker-compose') {
             steps {
                 script {
-                    sh 'docker-compose up -d'
+                    sh 'sudo docker-compose up -d'
                 }
             }
         }
@@ -85,8 +85,8 @@ pipeline {
         stage('Cleanup') {
             steps {
                 script {
-                    sh 'docker-compose down'
-                    sh 'docker rmi rest_webapp'
+                    sh 'sudo docker-compose down'
+                    sh 'sudo docker rmi rest_webapp'
                 }
             }
         }
