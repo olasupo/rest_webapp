@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/olasupo/Project_Part1.git'
+                git 'https://github.com/olasupo/rest_webapp.git'
             }
         }
 
