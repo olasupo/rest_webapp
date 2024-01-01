@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  mysql_db:
+    image: mysql:8.0.30-debian
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+    networks:
+      my_network:
+        ipv4_address: 192.168.99.102
+    container_name: mysql_container
+    volumes:
+      - ./mysql_data_v30:/var/lib/mysql_v30  # Corrected volume mount path
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+
+  rest_webapp:
+    image: rest_webapp
+    ports:
+      - 5001:5001
+    expose:
+      - 5001
+    volumes:
+      - .:/opt/backend_app
+    depends_on:
+      - mysql_db
+    networks:
+      my_network:
+        ipv4_address: 192.168.99.100
+networks:
+  my_network:
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.99.0/24
