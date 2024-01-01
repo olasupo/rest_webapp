@@ -48,6 +48,8 @@ pipeline {
             steps {
                 script {
                     sh 'python3 clean_environment.py'
+                    sh 'docker stop dev_mysql'
+                    sh 'docker rm dev_mysql'
                 }
             }
         }
