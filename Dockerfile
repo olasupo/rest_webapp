@@ -7,7 +7,7 @@ COPY . /opt/backend_app
 RUN pip install Flask==3.0.0 Flask-Cors==3.0.10 Werkzeug==3.0.1 PyMySQL==1.1.0 cryptography==40.0.2
 
 
-EXPOSE 5001
+EXPOSE 5005
 
 
 CMD ["python3", "rest_app.py"]
