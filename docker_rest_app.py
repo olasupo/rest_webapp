@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from datetime import datetime
 from flask_cors import CORS
-from db_connector import users_table_exists, create_users_table, user_exists, create_user, delete_user, update_user, search_actions
+from docker_db_connector import users_table_exists, create_users_table, user_exists, create_user, delete_user, update_user, search_actions
 import signal
 
 app = Flask(__name__)
