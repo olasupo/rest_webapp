@@ -24,7 +24,7 @@ services:
     ports:
       - 5005:5005
     expose:
-      - 5001
+      - 5005
     volumes:
       - .:/opt/backend_app
     depends_on:
