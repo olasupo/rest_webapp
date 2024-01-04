@@ -9,6 +9,10 @@ pipeline {
         pollSCM('* * * * *')
     }
 
+    environment {
+        DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials-id')  // Replace with your Docker Hub credentials ID
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -58,10 +62,19 @@ pipeline {
             }
         }
 
+        stage('Login to Docker Hub') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials-id', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        sh "docker login -u $DOCKER_USER -p $DOCKER_PASSWORD"
+                    }
+                }
+            }
+        }
+
         stage('Push image to Docker hub') {
             steps {
                 script {
-                    // Make sure the Docker image is available locally with the specified tag
                     sh 'docker tag rest_webapp olasupoo/rest_webapp:latest'
                     sh 'docker push olasupoo/rest_webapp:latest'
                 }
