@@ -16,7 +16,7 @@ pipeline {
             }
         }
 
-       stage('Run db_connector.py (Database Connection)') {
+        stage('Run db_connector.py (Database Connection)') {
             steps {
                 script {
                     sh 'python3 db_connector.py'
@@ -32,8 +32,6 @@ pipeline {
             }
         }
 
-
-
         stage('Run backend_testing.py') {
             steps {
                 script {
@@ -41,8 +39,6 @@ pipeline {
                 }
             }
         }
-
-
 
         stage('Run clean_environment.py') {
             steps {
@@ -61,13 +57,17 @@ pipeline {
                 }
             }
         }
-         stage('Push image to Docker hub') {
+
+        stage('Push image to Docker hub') {
             steps {
                 script {
+                    // Make sure the Docker image is available locally with the specified tag
+                    sh 'docker tag rest_webapp olasupoo/rest_webapp:latest'
                     sh 'docker push olasupoo/rest_webapp:latest'
                 }
             }
         }
+
         stage('Run docker-compose') {
             steps {
                 script {
@@ -75,6 +75,7 @@ pipeline {
                 }
             }
         }
+
         stage('Run docker_backend_testing.py') {
             steps {
                 script {
@@ -82,6 +83,7 @@ pipeline {
                 }
             }
         }
+
         stage('Cleanup') {
             steps {
                 script {
@@ -91,6 +93,5 @@ pipeline {
             }
         }
     }
-
-
 }
+
