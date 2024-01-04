@@ -9,4 +9,5 @@ RUN pip install Flask==3.0.0 Flask-Cors==3.0.10 Werkzeug==3.0.1 PyMySQL==1.1.0 c
 
 EXPOSE 5001
 
-CMD ["nohup python3", "rest_app.py &"]
+
+CMD ["sh", "-c", "nohup python3 rest_app.py &"]
