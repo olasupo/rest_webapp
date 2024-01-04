@@ -85,6 +85,15 @@ pipeline {
             steps {
                 script {
                     sh 'docker compose up -d'
+                    // Wait for Docker Compose services to be up
+                    script {
+                        def composeExitCode = sh(script: 'docker compose ps -q | xargs docker inspect --format "{{.State.Status}}" | grep -v "running"', returnStatus: true)
+                        while (composeExitCode == 0) {
+                            echo "Waiting for Docker Compose services to be up..."
+                            sleep 10
+                            composeExitCode = sh(script: 'docker compose ps -q | xargs docker inspect --format "{{.State.Status}}" | grep -v "running"', returnStatus: true)
+                        }
+                    }
                 }
             }
         }
@@ -100,7 +109,7 @@ pipeline {
         stage('Cleanup') {
             steps {
                 script {
-                    sh 'docker-compose down'
+                    sh 'docker compose down'
                     sh 'docker rmi rest_webapp'
                 }
             }

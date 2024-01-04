@@ -75,8 +75,8 @@ def test_database(user_id, expected_user_name):
 
 if __name__ == '__main__':
     # Define the user_id once
-    test_user_id = '100'
-    ran_user_name = 'John Bravo'
+    test_user_id = '1100'
+    ran_user_name = 'Johnny Bravlo'
 
     # Call test functions with the same user_id
     test_post_user(test_user_id)
