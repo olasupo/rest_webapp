@@ -22,13 +22,14 @@ services:
   rest_webapp:
     image: rest_webapp
     ports:
-      - 5001:5001
+      - 5005:5005
     expose:
       - 5001
     volumes:
       - .:/opt/backend_app
     depends_on:
       - mysql_db
+    container_name: rest_webapp_container
     networks:
       my_network:
         ipv4_address: 192.168.99.100
